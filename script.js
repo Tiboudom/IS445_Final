@@ -12,13 +12,14 @@ function isCorrectValue(elem) {
 
 function errorHandler() {
     result.innerHTML = "Number 1 input " + inputOne.value + " is not a valid number\nNumber 2 input " + inputTwo.value + " is not a valid input";
-	return false;
+    result.classList.add("text-danger");
+    return false;
 }
 
 function isRangeValueOne(elem) {
     const value = elem.value;
     const number = parseInt(value, 10);
-    if (number < 2 || number > 1000) {
+    if (number < 2 || number > 100) {
         result.innerHTML = "Number 1 input " + inputOne.value + " is not in range of 2 and 1000";
         return false;
     }
@@ -29,7 +30,7 @@ function isRangeValueTwo(elem) {
     const value = elem.value;
     const number = parseInt(value, 10);
     console.log(number);
-    if (number < 2 || number > 1000) {
+    if (number < 2 || number > 100) {
         result.innerHTML = "Number 2 input " + inputTwo.value + " is not in range of 2 and 1000";
         return false;
     }
@@ -43,13 +44,13 @@ function isCaseThree(one, two) {
     const numberTwo = parseInt(valueTwo, 10);
 
     if (!valueOne || isNaN(valueOne)) {
-        if (numberTwo < 2 || numberTwo > 1000) {
+        if (numberTwo < 2 || numberTwo > 100) {
             result.innerHTML = "Number 1 input " + inputOne.value + " is not a valid number\nNumber 2 input " + inputTwo.value + " is not in range of 2 and 1000";
             return false;
         }
 	}
     if (!valueTwo || isNaN(valueTwo)) {
-        if (numberOne < 2 || numberOne > 1000) {
+        if (numberOne < 2 || numberOne > 100) {
             result.innerHTML = "Number 1 input " + inputOne.value + " is not in range of 2 and 1000\nNumber 2 input " + inputTwo.value + " is not a valid number";
             return false;
         }
@@ -58,7 +59,29 @@ function isCaseThree(one, two) {
 }
 
 function rangeHandler() {
+    result.classList.add("text-danger");
     return false;
+}
+
+function isEvenNumber(n) {
+    return n % 2 === 0;
+}
+
+function findEvenNumbers(one, two) {
+    const valueOne = one.value;
+    const valueTwo = two.value;
+    const n1 = +valueOne < +valueTwo ? +valueOne : +valueTwo;
+    const n2 = +valueOne < +valueTwo ? +valueTwo : +valueOne;
+    const evenNumbers = [];
+
+    for (let i = n1; i <= n2; i++) {
+        if (isEvenNumber(i)) {
+            evenNumbers.push(i);
+        }
+    }
+    result.innerHTML = "There are " + evenNumbers.length + " even numbers:\n" + evenNumbers;
+    result.classList.remove("text-danger");
+    result.classList.add("text-success");
 }
 
 submitBtn.addEventListener("click", function () {
@@ -66,5 +89,5 @@ submitBtn.addEventListener("click", function () {
     if (!isCorrectValue(inputOne) || !isCorrectValue(inputTwo)) return errorHandler();
     if (!isRangeValueOne(inputOne)) return rangeHandler();
     if (!isRangeValueTwo(inputTwo)) return rangeHandler();
-    findPrimeNumbers(inputOne, inputTwo);
+    findEvenNumbers(inputOne, inputTwo);
 });
