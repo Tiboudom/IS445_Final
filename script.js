@@ -11,7 +11,7 @@ function isCorrectValue(elem) {
 }
 
 function errorHandler() {
-    result.innerHTML = "Number 1 input " + inputOne.value + " is not a valid number\nNumber 2 input" + inputTwo.value + " is not a valid input";
+    result.innerHTML = "Number 1 input " + inputOne.value + " is not a valid number\nNumber 2 input " + inputTwo.value + " is not a valid input";
 	return false;
 }
 
@@ -36,12 +36,34 @@ function isRangeValueTwo(elem) {
     return true;
 }
 
+function isCaseThree(one, two) {
+    const valueOne = one.value;
+    const valueTwo = two.value;
+    const numberOne = parseInt(valueOne, 10);
+    const numberTwo = parseInt(valueTwo, 10);
+
+    if (!valueOne || isNaN(valueOne)) {
+        if (numberTwo < 2 || numberTwo > 1000) {
+            result.innerHTML = "Number 1 input " + inputOne.value + " is not a valid number\nNumber 2 input " + inputTwo.value + " is not in range of 2 and 1000";
+            return false;
+        }
+	}
+    if (!valueTwo || isNaN(valueTwo)) {
+        if (numberOne < 2 || numberOne > 1000) {
+            result.innerHTML = "Number 1 input " + inputOne.value + " is not in range of 2 and 1000\nNumber 2 input " + inputTwo.value + " is not a valid number";
+            return false;
+        }
+    }
+    return true;
+}
+
 function rangeHandler() {
     return false;
 }
 
 submitBtn.addEventListener("click", function () {
-	if (!isCorrectValue(inputOne) || !isCorrectValue(inputTwo)) return errorHandler();
+    if (!isCaseThree(inputOne, inputTwo)) return rangeHandler();
+    if (!isCorrectValue(inputOne) || !isCorrectValue(inputTwo)) return errorHandler();
     if (!isRangeValueOne(inputOne)) return rangeHandler();
     if (!isRangeValueTwo(inputTwo)) return rangeHandler();
     findPrimeNumbers(inputOne, inputTwo);
